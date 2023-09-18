@@ -10,7 +10,7 @@ apt update -y
 apt install ca-certificates curl gnupg lsb-release -y
 apt install gdu tree jq tmux htop colorized-logs -y
 apt install reptyr python3-pip python-is-python3 -y
-apt install libssl libssl-dev libboost-tools-dev libboost-dev libboost-system-dev -y
+apt install libssl-dev libboost-tools-dev libboost-dev libboost-system-dev -y
 
 
 \cp ./.bashrc ~/.bashrc -f
