@@ -111,6 +111,3 @@ fi
 alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
-
-export RUSTUP_DIST_SERVER="https://rsproxy.cn"
-export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
