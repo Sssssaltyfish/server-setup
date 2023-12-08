@@ -19,6 +19,7 @@ function update-env {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User") 
 }
 
+# check https://github.com/Sssssaltyfish/get-git instead
 function get-git {
     [CmdletBinding()]
     param (
