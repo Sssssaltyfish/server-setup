@@ -1,0 +1,8 @@
+CompileFlags:
+  Add: [-Wno-unknown-warning-option, -Wall]
+  Remove: [-m*, -f*]
+Completion:
+  AllScopes: Yes
+---
+Hover:
+  ShowAKA: Yes
