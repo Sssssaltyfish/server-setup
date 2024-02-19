@@ -8,7 +8,40 @@ Invoke-Expression (&starship init powershell)
 Enable-TransientPrompt
 $ENV:STARSHIP_CACHE = "$HOME\AppData\Local\Temp"
 
+Import-Module posh-git
 
+. "$PSScriptRoot\completions.ps1"
+
+function Restart-Process {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [string]
+        $Name,
+
+        [bool]
+        $Yes = $false
+    )
+
+    $ErrorActionPreference = "Stop"
+
+    Get-Process $name | ForEach-Object {
+        $proc_id = $_.Id
+        $title = $_.MainWindowTitle
+        $cmdline = (Get-WmiObject Win32_Process -Filter "Handle=$proc_id").CommandLine
+
+        if (-not $Yes) {
+            while ((Read-Host "killing $title, press Enter to proceed") -ne "`n") {}
+        }
+
+        $_.Kill()
+        $_.WaitForExit()
+
+        Write-Host "$title killed, restarting"
+        Start-Process -FilePath $cmdline.Split(' ')[0] -ArgumentList $cmdline.Split(' ')[1]
+        Write-Host "successfully restarted $title"
+    }
+}
 function update-net-escape {
     $sid = (reg query 'HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Mappings' /s /d /f *Unigram*).split("`n")[1].split("\")[-1].trim()
     Write-Output $sid
