@@ -42,6 +42,7 @@ function Restart-Process {
         Write-Host "successfully restarted $title"
     }
 }
+
 function update-net-escape {
     $sid = (reg query 'HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Mappings' /s /d /f *Unigram*).split("`n")[1].split("\")[-1].trim()
     Write-Output $sid
@@ -53,35 +54,8 @@ function update-env {
 }
 
 # check https://github.com/Sssssaltyfish/get-git instead
-function get-git {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory)]
-        [System.Uri]
-        $url
-    )
-
-    $builder = [System.UriBuilder]$url
-    $seg = [System.Collections.ArrayList]$builder.Path.Split("/")
-    $idx = $seg.IndexOf("tree")
-    if ($idx -eq -1) {
-        throw "Not a github repo"
-    }
-
-    $branch = $seg[$idx + 1]
-    if ($branch -eq "master" -or $branch -eq "main") {
-        $seg[$idx] = "trunk"
-        $seg.RemoveAt($idx + 1)
-    }
-    else {
-        $seg[$idx] = "branches"
-    }
-
-    $builder.Path = $seg -join "/"
-    $svn_uri = $builder.Uri
-
-    svn checkout $svn_uri
-}
+# function get-git {
+# }
 
 Import-Module PSReadLine
 

@@ -56,12 +56,12 @@ fi
 source "$HOME/.cargo/env"
 
 if [[ $MAINLAND ]]; then
-    curl https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py311_23.5.2-0-Linux-x86_64.sh -s > miniconda.sh
+    curl https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -s > miniconda.sh
 else
-    curl https://repo.anaconda.com/miniconda/Miniconda3-py311_23.5.2-0-Linux-x86_64.sh -s > miniconda.sh
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -s > miniconda.sh
 fi
 
-sh ./miniconda.sh -b -f
+\sh ./miniconda.sh -b -f
 
 source ~/miniconda3/bin/activate base
 
@@ -77,6 +77,6 @@ pip install numpy scipy matplotlib ipython pandas streamlit pymongo
 
 conda init $(ps -p $$ -ocomm=)
 
-. ./mongodb.sh
+# . ./mongodb.sh
 
 cd $CUR_DIR
