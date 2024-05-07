@@ -1,6 +1,11 @@
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
+#region conda initialize
+# !! Contents within this block are managed by 'conda init' !!
+(& "E:\Whatever\Miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
+#endregion
+
 function Invoke-Starship-TransientFunction {
     &starship module character
 }
@@ -11,6 +16,8 @@ $ENV:STARSHIP_CACHE = "$HOME\AppData\Local\Temp"
 Import-Module posh-git
 
 . "$PSScriptRoot\completions.ps1"
+
+Set-Alias -Name which -Value where.exe
 
 function Restart-Process {
     [CmdletBinding()]
@@ -49,23 +56,28 @@ function update-net-escape {
     CheckNetIsolation.exe LoopbackExempt -a "-p=$sid"
 }
 
+function mount-f {
+    # Run as admin
+    Set-ItemProperty -Path "HKLM:\\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices\" -Name "F:" -Value "\??\E:\Whatever" -ErrorAction SilentlyContinue
+}
+
 function update-env {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User") 
 }
 
-# check https://github.com/Sssssaltyfish/get-git instead
-# function get-git {
-# }
-
 Import-Module PSReadLine
 
-Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -ShowToolTips
+Set-PSReadLineOption -CompletionQueryItems 100
+Set-PSReadLineOption -PredictionViewStyle InlineView
+
+Set-PSReadLineOption -HistorySearchCursorMovesToEnd:$false
 
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+
 
 Set-PSReadLineKeyHandler -Key F1 `
     -BriefDescription CommandHelp `
