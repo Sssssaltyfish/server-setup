@@ -65,6 +65,13 @@ function update-env {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User") 
 }
 
+function set-vsenv {
+    $vs_dir = vswhere -latest -property installationPath
+    $common_dir = Join-Path $vs_dir "Common7"
+    Import-Module "$common_dir\Tools\Microsoft.VisualStudio.DevShell.dll"
+    Enter-VsDevShell -SkipAutomaticLocation -SetDefaultWindowTitle -InstallPath $vs_dir\
+}
+
 Import-Module PSReadLine
 
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
