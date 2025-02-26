@@ -1,0 +1,16 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 120
+IndentAccessModifiers: false
+AccessModifierOffset: -4
+DerivePointerAlignment: false
+PointerAlignment: Right
+SortIncludes: CaseSensitive
+IndentPPDirectives: None
+AlignAfterOpenBracket: BlockIndent
+BinPackArguments: false
+BinPackParameters: false
+AlignTrailingComments: true
+ReflowComments: false
+CommentPragmas: "^(!|\\*|\\n)"
+PenaltyBreakComment: 1000000
