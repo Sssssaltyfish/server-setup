@@ -1,3 +1,5 @@
+// fetch all elements matching selector on site in one zip
+
 import * as zip from "@zip.js/zip.js";
 
 async function download(selector: string, postfixArg: string) {
